@@ -29,10 +29,11 @@ import org.neo4j.jdbc.ParameterMetaData;
 public class BoltParameterMetaData extends ParameterMetaData implements Loggable {
 
 	private boolean loggable = false;
-	private BoltPreparedStatement preparedStatement;
 
 	public BoltParameterMetaData(BoltPreparedStatement preparedStatement) {
-		this.preparedStatement = preparedStatement;
+		if (preparedStatement != null && preparedStatement.isLoggable()) {
+			this.setLoggable(true);
+		}
 	}
 
 	@Override public boolean isLoggable() {

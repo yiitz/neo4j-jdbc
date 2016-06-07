@@ -47,6 +47,10 @@ public class BoltConnection extends Connection implements Loggable {
 	public BoltConnection(Session session, Properties properties) {
 		super(properties,  BoltResultSet.DEFAULT_HOLDABILITY);
 		this.session = session;
+
+		if(properties != null && Boolean.valueOf(properties.getProperty("debug", "false"))) {
+			this.setLoggable(true);
+		}
 	}
 
 	/**
@@ -126,9 +130,7 @@ public class BoltConnection extends Connection implements Loggable {
 		this.transaction.failure();
 	}
 
-	/*--------------------------c boolean isClosed() throws SQLException {
-		return !this.session.isOpen();
-	}----*/
+	/*------------------------------*/
 	/*       Create Statement       */
 	/*------------------------------*/
 

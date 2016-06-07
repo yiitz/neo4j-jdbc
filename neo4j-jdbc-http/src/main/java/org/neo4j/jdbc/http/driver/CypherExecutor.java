@@ -82,6 +82,9 @@ public class CypherExecutor {
 	 * @throws SQLException
 	 */
 	public CypherExecutor(String host, Integer port, Properties properties) throws SQLException {
+		if(properties == null) {
+			properties = new Properties();
+		}
 		// Create the http client builder
 		HttpClientBuilder builder = HttpClients.custom();
 		// Adding authentication to the http client if needed
@@ -231,7 +234,7 @@ public class CypherExecutor {
 		try (CloseableHttpResponse response = http.execute(request)) {
 			try (InputStream is = response.getEntity().getContent()) {
 				Map body = mapper.readValue(is, Map.class);
-				if(body.get("version") != null) {
+				if (body.get("version") != null) {
 					result = (String) body.get("version");
 				}
 			}

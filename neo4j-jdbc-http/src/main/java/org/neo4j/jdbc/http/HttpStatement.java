@@ -39,6 +39,10 @@ public class HttpStatement extends Statement implements Loggable {
 	public HttpStatement(HttpConnection httpConnection) {
 		super(httpConnection);
 		batchStatements = new ArrayList<>();
+
+		if(httpConnection != null && httpConnection.isLoggable()) {
+			this.setLoggable(true);
+		}
 	}
 
 	@Override public ResultSet executeQuery(String cypher) throws SQLException {

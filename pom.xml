@@ -90,6 +90,7 @@
         <neo4j.version>3.0.2</neo4j.version>
         <httpclient.version>4.3.4</httpclient.version>
         <jackson.version>2.7.0</jackson.version>
+        <cglib.version>3.2.2</cglib.version>
 
         <!-- Plugin version -->
         <maven.plugin.compiler>3.5.1</maven.plugin.compiler>
@@ -122,6 +123,12 @@
                 <groupId>org.neo4j</groupId>
                 <artifactId>neo4j-jdbc-http</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib-nodep</artifactId>
+                <version>${cglib.version}</version>
             </dependency>
 
             <!-- Deps to the HTTP client -->

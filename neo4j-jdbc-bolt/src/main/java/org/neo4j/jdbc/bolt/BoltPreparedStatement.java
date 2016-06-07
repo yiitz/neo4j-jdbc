@@ -37,16 +37,18 @@ import static java.util.Arrays.*;
  */
 public class BoltPreparedStatement extends PreparedStatement implements Loggable {
 
-	private Transaction transaction;
 	private int[]       rsParams;
 	private boolean loggable = false;
 	private List<HashMap<String, Object>> batchParameters;
 
 	public BoltPreparedStatement(BoltConnection connection, String rawStatement, int... rsParams) {
 		super(connection, rawStatement);
-		this.transaction = connection.getTransaction();
 		this.rsParams = rsParams;
 		this.batchParameters = new ArrayList<>();
+
+		if (connection != null && connection.isLoggable()) {
+			this.setLoggable(true);
+		}
 	}
 
 	@Override public ResultSet executeQuery() throws SQLException {

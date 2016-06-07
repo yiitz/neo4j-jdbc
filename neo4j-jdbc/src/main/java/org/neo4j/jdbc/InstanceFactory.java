@@ -21,19 +21,67 @@
  */
 package org.neo4j.jdbc;
 
-//import org.mockito.Mockito;
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.MethodInterceptor;
+import net.sf.cglib.proxy.MethodProxy;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 /**
  * @author AgileLARUS
  * @since 3.0.0
  */
 public class InstanceFactory {
+
 	public static <T extends Loggable> T debug(Class<T> cls, T obj, boolean log) {
-/*		if (log) {
-			obj.setLoggable(true);
-			obj = Mockito.mock(cls, Mockito.withSettings().spiedInstance(obj).verboseLogging().defaultAnswer(Mockito.CALLS_REAL_METHODS));
+		T ret = obj;
+		if (log) {
+			Constructor constructor = cls.getConstructors()[0];
+			Class[] argTypes = constructor.getParameterTypes();
+			Object[] args = new Object[argTypes.length];
+			for (int i = 0; i < argTypes.length; i++) {
+				// TODO: Make something more generic here specially for primitive type and array
+				if (!argTypes[i].getName().startsWith("[")) {
+					args[i] = null;
+				} else {
+					args[i] = new int[0];
+				}
+			}
+
+			Enhancer enhancer = new Enhancer();
+			enhancer.setSuperclass(cls);
+			enhancer.setCallback(new LoggerMethodInterceptor(obj));
+			ret = (T) enhancer.create(argTypes, args);
 		}
-*/
-		return obj;
+
+		return ret;
+	}
+
+	private static class LoggerMethodInterceptor implements MethodInterceptor {
+
+		private Object underlying;
+
+		public LoggerMethodInterceptor(Object obj) {
+			this.underlying = obj;
+		}
+
+		@Override public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+			StringBuffer sb = new StringBuffer().append(underlying.getClass().getName()).append(" - ").append(method.getName()).append("(");
+			for (int i = 0; args != null && i < args.length; i++) {
+				if (i != 0)
+					sb.append(", ");
+				sb.append(args[i]);
+			}
+			sb.append(")");
+			System.out.println(sb);
+			Object ret = method.invoke(underlying, args);
+			if (ret != null) {
+				sb.append(" -> ");
+				sb.append(ret);
+			}
+			System.out.println(sb);
+			return ret;
+		}
 	}
 }

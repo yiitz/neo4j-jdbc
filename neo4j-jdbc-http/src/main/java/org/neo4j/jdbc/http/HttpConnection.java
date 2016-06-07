@@ -50,6 +50,10 @@ public class HttpConnection extends Connection implements Loggable {
 	public HttpConnection(String host, Integer port, Properties properties) throws SQLException {
 		super(properties, ResultSet.CLOSE_CURSORS_AT_COMMIT);
 		this.executor = new CypherExecutor(host, port, properties);
+
+		if(properties != null && Boolean.valueOf(properties.getProperty("debug", "false"))) {
+			this.setLoggable(true);
+		}
 	}
 
 	/**

@@ -23,4 +23,11 @@
     <name>Neo4j JDBC Driver</name>
     <description>Common module for every implementation of the Neo4j JDBC Driver</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
