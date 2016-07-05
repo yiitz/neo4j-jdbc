@@ -484,6 +484,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <h2 id="_overview_neo4j_jdbc_driver">Overview: Neo4j JDBC Driver</h2>
 <div class="sectionbody">
 <div class="paragraph">
+<p><span class="image"><a class="image" href="https://travis-ci.org/neo4j-contrib/neo4j-jdbc"><img src="https://travis-ci.org/neo4j-contrib/neo4j-jdbc.svg?branch=master" alt="Build Status"></a></span></p>
+</div>
+<div class="paragraph">
 <p>This is the official JDBC driver for Neo4j.</p>
 </div>
 <div class="paragraph">
@@ -503,11 +506,11 @@ The previous JDBC driver for Neo4j 2.x was moved to the <a href="https://github.
 </table>
 </div>
 <div class="paragraph">
-<p>Being a graph database, Neo4J is not serving data in a relational way and the exact purpose of this project is to allow
-projects that are using the classic JDBC connector in the relational paradigm to interact with Neo4J.</p>
+<p>Being a graph database, Neo4j is not serving data in a relational way and the exact purpose of this project is to allow
+projects that are using the classic JDBC connector in the relational paradigm to interact with Neo4j.</p>
 </div>
 <div class="paragraph">
-<p>This driver that supports various types of database transports:</p>
+<p>This driver supports various types of database transports:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -537,7 +540,7 @@ projects that are using the classic JDBC connector in the relational paradigm to
 <div class="listingblock">
 <div class="title">Dependency declaration</div>
 <div class="content">
-<pre class="highlight"><code>org.neo4j:neo4j-jbc:3.0</code></pre>
+<pre class="highlight"><code>org.neo4j:neo4j-jdbc:3.0</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -551,8 +554,8 @@ String query = "MATCH (u:User)-[:FRIEND]-(f:User) WHERE u.name = {1} RETURN f.na
 try (PreparedStatement stmt = con.prepareStatement(query)) {
     stmt.setString(1,"John");
     ResultSet rs = con.execute();
-	while (rs.next()) {
-		System.out.println("Friend: "+rs.getString("f.name")+" is "+rs.getInt("f.age"));
+    while (rs.next()) {
+        System.out.println("Friend: "+rs.getString("f.name")+" is "+rs.getInt("f.age"));
 	}
 }
 con.close();</code></pre>
@@ -567,10 +570,10 @@ con.close();</code></pre>
 <p>Install a Neo4j 3.0.X server and start it with the BOLT protocol enabled</p>
 </li>
 <li>
-<p>Connect with URLs in the form jdbc:neo4j:bolt://&lt;host&gt;:&lt;port&gt;/ e.g. jdbc:neo4j:bolt://localhost/</p>
+<p>Connect with URLs in the form <code>jdbc:neo4j:bolt://&lt;host&gt;:&lt;port&gt;/</code> (e.g. <code>jdbc:neo4j:bolt://localhost/</code>)</p>
 </li>
 <li>
-<p>You can also use additional comma separated parameters in the URL for authentication, debug mode and ssl encryption, e.g. jdbc:neo4j:bolt://localhost/?user=neo4j,password=xxxx,debug=true,noSsl,flatten=[-1,100,1000]</p>
+<p>You can also use additional comma separated parameters in the URL for authentication, debug mode, ssl encryption and flattening e.g. <code>jdbc:neo4j:bolt://localhost/?user=neo4j,password=xxxx,debug=true,noSsl,flatten=[-1,100,1000]</code></p>
 </li>
 <li>
 <p>Add the JDBC driver dependency or jar file to your project</p>
@@ -579,7 +582,7 @@ con.close();</code></pre>
 <p>Get a connection from DriverManager</p>
 </li>
 <li>
-<p>Execute queries and transactions using the Cyper graph query language</p>
+<p>Execute queries and transactions using the Cypher graph query language</p>
 </li>
 </ul>
 </div>
@@ -862,7 +865,7 @@ limitations under the License.</p>
 <div class="listingblock">
 <div class="title">Dependency declaration</div>
 <div class="content">
-<pre class="highlight"><code>org.neo4j:neo4j-jbc:3.0</code></pre>
+<pre class="highlight"><code>org.neo4j:neo4j-jdbc:3.0</code></pre>
 </div>
 </div>
 <div class="listingblock">
@@ -876,8 +879,8 @@ String query = "MATCH (u:User)-[:FRIEND]-(f:User) WHERE u.name = {1} RETURN f.na
 try (PreparedStatement stmt = con.prepareStatement(query)) {
     stmt.setString(1,"John");
     ResultSet rs = con.execute();
-	while (rs.next()) {
-		System.out.println("Friend: "+rs.getString("f.name")+" is "+rs.getInt("f.age"));
+    while (rs.next()) {
+        System.out.println("Friend: "+rs.getString("f.name")+" is "+rs.getInt("f.age"));
 	}
 }
 con.close();</code></pre>
@@ -1935,7 +1938,7 @@ RETURN row</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-04 09:58:25 CEST
+Last updated 2016-07-05 17:18:44 CEST
 </div>
 </div>
 </body>
