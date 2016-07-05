@@ -611,13 +611,13 @@ With <code>-1</code> all rows are sampled and with any other value you determine
 <p><a href="https://github.com/neo4j-contrib/neo4j-jdbc/tree/master/neo4j-jdbc">Neo4j JDBC</a> - the core module</p>
 </li>
 <li>
-<p><a href="https://github.com/neo4j-contrib/neo4j-jdbc/tree/master/neo4j-jdbc-driver">Neo4j JDBC - Driver packaging</a> - module to package all above modules</p>
-</li>
-<li>
 <p><a href="https://github.com/neo4j-contrib/neo4j-jdbc/tree/master/neo4j-jdbc-bolt">Neo4j JDBC - Bolt</a> - module supporting the bolt protocol</p>
 </li>
 <li>
 <p><a href="https://github.com/neo4j-contrib/neo4j-jdbc/tree/master/neo4j-jdbc-http">Neo4j JDBC - Http</a> - module supporting the http protocol</p>
+</li>
+<li>
+<p><a href="https://github.com/neo4j-contrib/neo4j-jdbc/tree/master/neo4j-jdbc-driver">Neo4j JDBC - Driver packaging</a> - module to package all above modules</p>
 </li>
 </ul>
 </div>
@@ -639,8 +639,17 @@ With <code>-1</code> all rows are sampled and with any other value you determine
 <pre>mvn clean test -Pperformance-test</pre>
 </div>
 </div>
-<div class="paragraph">
-<p>To run the performance test, you must have a Neo4j Server (3.0.X) running with the Bolt protocol enabled on port 7687 (default)</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+To run the performance test, you must have a Neo4j Server (3.0.X) running with the Bolt protocol enabled on port 7687 (default)
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -666,7 +675,7 @@ With <code>-1</code> all rows are sampled and with any other value you determine
 <p>Support for additional API methods</p>
 </li>
 <li>
-<p>Explicit enabling of flatten=&lt;rows&gt; via jdbc URL</p>
+<p>Explicit enabling of <code>flatten=&lt;rows&gt;</code> via jdbc URL</p>
 </li>
 </ul>
 </div>
@@ -764,13 +773,16 @@ limitations under the License.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>Michael Vitz</p>
+<p><a href="https://twitter.com/irregularbi">Ralf Becher</a>, TiQ solutions - Qlik Luminary</p>
 </li>
 <li>
-<p>Angelo Busato</p>
+<p><a href="https://twitter.com/michaelvitz">Michael Vitz</a>, InnoQ - Software Developer</p>
 </li>
 <li>
-<p>Enrico Marin</p>
+<p><a href="https://twitter.com/abusato95">Angelo Busato</a>, Larus-BA - Software Developer</p>
+</li>
+<li>
+<p><a href="https://github.com/enricomarin">Enrico Marin</a>, Larus-BA - Software Developer</p>
 </li>
 </ul>
 </div>
@@ -1938,7 +1950,7 @@ RETURN row</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2016-07-05 17:18:44 CEST
+Last updated 2016-07-05 17:54:42 CEST
 </div>
 </div>
 </body>
