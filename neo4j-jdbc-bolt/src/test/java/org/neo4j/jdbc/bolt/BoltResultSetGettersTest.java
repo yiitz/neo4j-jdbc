@@ -22,7 +22,7 @@ package org.neo4j.jdbc.bolt;
 import org.neo4j.jdbc.Connection;
 import org.neo4j.jdbc.ResultSet;
 import org.neo4j.jdbc.Statement;
-import org.neo4j.jdbc.bolt.data.ResultSetData;
+import org.neo4j.driver.internal.ResultSetData;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;

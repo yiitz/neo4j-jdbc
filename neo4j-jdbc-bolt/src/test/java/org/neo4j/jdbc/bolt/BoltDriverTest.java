@@ -25,8 +25,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.neo4j.driver.internal.InternalSession;
-import org.neo4j.driver.internal.logging.DevNullLogger;
+import org.neo4j.driver.internal.NetworkSession;
 import org.neo4j.driver.v1.AuthTokens;
 import org.neo4j.driver.v1.Config;
 import org.neo4j.driver.v1.GraphDatabase;
@@ -53,7 +52,7 @@ import static org.junit.Assert.*;
 
 	@BeforeClass public static void initialize() {
 		mockedDriver = Mockito.mock(org.neo4j.driver.v1.Driver.class);
-		Mockito.when(mockedDriver.session()).thenReturn(new InternalSession(null, new DevNullLogger()));
+		Mockito.when(mockedDriver.session()).thenReturn(new NetworkSession(null));
 	}
 
 	/*------------------------------*/

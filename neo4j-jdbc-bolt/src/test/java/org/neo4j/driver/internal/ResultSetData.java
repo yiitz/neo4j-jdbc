@@ -17,17 +17,17 @@
  * <p>
  * Created on 18/02/16
  */
-package org.neo4j.jdbc.bolt.data;
+package org.neo4j.driver.internal;
 
 import org.junit.BeforeClass;
-import org.neo4j.driver.internal.*;
 import org.neo4j.driver.internal.spi.Connection;
-import org.neo4j.driver.internal.spi.StreamCollector;
 import org.neo4j.driver.internal.value.FloatValue;
 import org.neo4j.driver.internal.value.IntegerValue;
 import org.neo4j.driver.internal.value.StringValue;
+import org.neo4j.driver.v1.Statement;
 import org.neo4j.driver.v1.StatementResult;
 import org.neo4j.driver.v1.Value;
+import org.neo4j.driver.v1.Values;
 import org.neo4j.driver.v1.types.Entity;
 import org.neo4j.driver.v1.types.Node;
 import org.neo4j.driver.v1.types.Path;
@@ -37,6 +37,7 @@ import java.util.*;
 
 import static org.mockito.Mockito.mock;
 import static org.neo4j.driver.v1.Values.values;
+import static org.neo4j.driver.v1.Values.ofValue;
 
 /**
  * @author AgileLARUS
@@ -78,7 +79,7 @@ public class ResultSetData {
 
 		RECORD_LIST_ONE_NULL_ELEMENT = new LinkedList<>();
 		RECORD_LIST_ONE_NULL_ELEMENT.add(new Object[] { null, null });
-		
+
 		RECORD_LIST_MORE_ELEMENTS = new LinkedList<>();
 		RECORD_LIST_MORE_ELEMENTS.add(new Object[] { "valueA1", "valueB1" });
 		RECORD_LIST_MORE_ELEMENTS.add(new Object[] { "valueA2", "valueB2" });
@@ -259,21 +260,20 @@ public class ResultSetData {
 
 		try {
 			Connection connection = mock(Connection.class);
+			String statement = "<unknown>";
 
-			InternalStatementResult cursor = new InternalStatementResult(connection, null);
-			StreamCollector responseCollector = (StreamCollector) runResponseCollectorMethod.invoke(cursor);
-			responseCollector.keys(keys);
-			responseCollector.done();
+			InternalStatementResult cursor = new InternalStatementResult(connection, null, new Statement(statement));
+			cursor.runResponseCollector().keys(keys);
+			cursor.runResponseCollector().done();
 
-			StreamCollector pullAllResponseCollector = (StreamCollector) pullAllResponseCollectorMethod.invoke(cursor);
-
-			for(Object[] values : data){
-				pullAllResponseCollector.record(values(values));
+			for (Object[] values : data) {
+				cursor.pullAllResponseCollector().record(values(values));
 			}
-			pullAllResponseCollector.done();
-			connection.run("<unknown>", ParameterSupport.NO_PARAMETERS, responseCollector);
-			connection.pullAll(pullAllResponseCollector);
-			//connection.sendAll();
+			cursor.pullAllResponseCollector().done();
+
+			connection.run(statement, Values.EmptyMap.asMap(ofValue()), cursor.runResponseCollector());
+			connection.pullAll(cursor.pullAllResponseCollector());
+			connection.flush();
 
 			return cursor;
 		} catch (Exception e) {

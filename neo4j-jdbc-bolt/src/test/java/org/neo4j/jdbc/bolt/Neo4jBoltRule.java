@@ -41,6 +41,7 @@ public class Neo4jBoltRule implements TestRule {
 
 			@Override public void evaluate() throws Throwable {
 				Map<Setting<?>, String> settings = new HashMap<>();
+				settings.put(boltConnector("0").type, "BOLT");
 				settings.put(boltConnector("0").enabled, "true");
 				settings.put(boltConnector("0").encryption_level, DISABLED.name());
 				settings.put(GraphDatabaseSettings.auth_enabled, Boolean.toString(requireAuth));

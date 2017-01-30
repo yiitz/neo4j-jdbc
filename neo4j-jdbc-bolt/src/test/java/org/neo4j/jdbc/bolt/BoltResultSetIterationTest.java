@@ -20,7 +20,7 @@
 package org.neo4j.jdbc.bolt;
 
 import org.neo4j.jdbc.ResultSet;
-import org.neo4j.jdbc.bolt.data.ResultSetData;
+import org.neo4j.driver.internal.ResultSetData;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.neo4j.driver.v1.StatementResult;
