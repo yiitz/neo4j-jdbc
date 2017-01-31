@@ -243,7 +243,7 @@ public class BoltConnectionIT {
 	
 	@Test public void killingThreadQueryExecutionShouldInvalidateWrappedBoltSession() throws SQLException {
 		expectedEx.expect(SQLException.class);
-		
+
 		try (Connection connection = DriverManager.getConnection(NEO4J_JDBC_BOLT_URL)) {
 			assertFalse(connection.isClosed());
 			assertTrue(connection.isValid(0));
@@ -263,9 +263,9 @@ public class BoltConnectionIT {
 			while (t.isAlive()) {
 			}
 			
-			assertFalse(connection.isClosed());
 			assertFalse(connection.isValid(1));
-			
+			assertTrue(connection.isClosed());
+
 			try (Statement statement = connection.createStatement()) {
 				try (ResultSet resultSet = statement.executeQuery("RETURN 1")) {
 					assertTrue(resultSet.next());
