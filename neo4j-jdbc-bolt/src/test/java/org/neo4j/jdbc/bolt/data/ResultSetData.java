@@ -17,9 +17,13 @@
  * <p>
  * Created on 18/02/16
  */
-package org.neo4j.driver.internal;
+package org.neo4j.jdbc.bolt.data;
 
 import org.junit.BeforeClass;
+import org.neo4j.driver.internal.InternalNode;
+import org.neo4j.driver.internal.InternalPath;
+import org.neo4j.driver.internal.InternalRelationship;
+import org.neo4j.driver.internal.InternalStatementResult;
 import org.neo4j.driver.internal.spi.Connection;
 import org.neo4j.driver.internal.value.FloatValue;
 import org.neo4j.driver.internal.value.IntegerValue;
@@ -249,35 +253,4 @@ public class ResultSetData {
 		}
 	}
 
-	/**
-	 * hackish way to get a {@link InternalStatementResult}
-	 *
-	 * @param keys
-	 * @param data
-	 * @return
-	 */
-	public static StatementResult buildResultCursor(String[] keys, List<Object[]> data) {
-
-		try {
-			Connection connection = mock(Connection.class);
-			String statement = "<unknown>";
-
-			InternalStatementResult cursor = new InternalStatementResult(connection, null, new Statement(statement));
-			cursor.runResponseCollector().keys(keys);
-			cursor.runResponseCollector().done();
-
-			for (Object[] values : data) {
-				cursor.pullAllResponseCollector().record(values(values));
-			}
-			cursor.pullAllResponseCollector().done();
-
-			connection.run(statement, Values.EmptyMap.asMap(ofValue()), cursor.runResponseCollector());
-			connection.pullAll(cursor.pullAllResponseCollector());
-			connection.flush();
-
-			return cursor;
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
 }

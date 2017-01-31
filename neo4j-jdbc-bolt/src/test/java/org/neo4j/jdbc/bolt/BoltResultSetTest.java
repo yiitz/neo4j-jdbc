@@ -19,8 +19,9 @@
  */
 package org.neo4j.jdbc.bolt;
 
+import org.neo4j.driver.internal.DummyStatementResult;
 import org.neo4j.jdbc.ResultSet;
-import org.neo4j.driver.internal.ResultSetData;
+import org.neo4j.jdbc.bolt.data.ResultSetData;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -49,8 +50,8 @@ public class BoltResultSetTest {
 	/*------------------------------*/
 
 	@Test public void isClosedReturnFalseWhenConnectionOpen() throws SQLException {
-		StatementResult StatementResult = ResultSetData
-				.buildResultCursor(ResultSetData.KEYS_RECORD_LIST_MORE_ELEMENTS, ResultSetData.RECORD_LIST_MORE_ELEMENTS);
+		StatementResult StatementResult = DummyStatementResult
+				.build(ResultSetData.KEYS_RECORD_LIST_MORE_ELEMENTS, ResultSetData.RECORD_LIST_MORE_ELEMENTS);
 		ResultSet resultSet = new BoltResultSet(null, StatementResult);
 
 		assertFalse(resultSet.isClosed());
@@ -58,8 +59,8 @@ public class BoltResultSetTest {
 
 	//this method depends on the close() method
 	@Test public void isClosedReturnTrueWhenConnectionClosed() throws SQLException {
-		StatementResult StatementResult = ResultSetData
-				.buildResultCursor(ResultSetData.KEYS_RECORD_LIST_MORE_ELEMENTS, ResultSetData.RECORD_LIST_MORE_ELEMENTS);
+		StatementResult StatementResult = DummyStatementResult
+				.build(ResultSetData.KEYS_RECORD_LIST_MORE_ELEMENTS, ResultSetData.RECORD_LIST_MORE_ELEMENTS);
 		ResultSet resultSet = new BoltResultSet(null, StatementResult);
 
 		resultSet.close();
